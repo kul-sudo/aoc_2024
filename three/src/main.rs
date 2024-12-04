@@ -15,8 +15,8 @@ fn main() {
 
     for line in STRING.lines() {
         for capture in regex.captures_iter(line) {
-            let lhs = &capture["lhs"].parse::<usize>().unwrap();
-            let rhs = &capture["rhs"].parse::<usize>().unwrap();
+            let lhs = capture["lhs"].parse::<usize>().unwrap();
+            let rhs = capture["rhs"].parse::<usize>().unwrap();
 
             sum += lhs * rhs;
         }
