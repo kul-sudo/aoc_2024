@@ -1,5 +1,3 @@
-use std::collections::{HashMap, HashSet};
-
 const STRING: &str = "99006   28305
 38540   91683
 18133   49738
@@ -1003,38 +1001,21 @@ const STRING: &str = "99006   28305
 ";
 
 fn main() {
-    let mut left_column = HashMap::new();
-    let mut right_column = HashMap::new();
-
-    let mut id = 0;
+    let mut left_column = Vec::new();
+    let mut right_column = Vec::new();
 
     for line in STRING.lines() {
         let numbers = line.split("   ").collect::<Vec<_>>();
-        left_column.insert(id, numbers[0].parse::<usize>().unwrap());
-        id += 1;
-        right_column.insert(id, numbers[1].parse::<usize>().unwrap());
+        left_column.push(numbers[0].parse::<usize>().unwrap());
+        right_column.push(numbers[1].parse::<usize>().unwrap());
     }
 
+    left_column.sort();
+    right_column.sort();
+
     let mut sum = 0;
-    let mut left_column_removed = HashSet::new();
-    let mut right_column_removed = HashSet::new();
-
-    while left_column_removed.len() != left_column.len() {
-        let (left_max_key, left_max_value) = left_column
-            .iter()
-            .filter(|x| !left_column_removed.contains(x.0))
-            .max_by_key(|x| x.1)
-            .unwrap();
-        let (right_max_key, right_max_value) = right_column
-            .iter()
-            .filter(|x| !right_column_removed.contains(x.0))
-            .max_by_key(|x| x.1)
-            .unwrap();
-
-        sum += left_max_value.abs_diff(*right_max_value);
-
-        left_column_removed.insert(left_max_key);
-        right_column_removed.insert(right_max_key);
+    for i in 0..left_column.len() {
+        sum += (left_column[i]).abs_diff(right_column[i]);
     }
 
     println!("{}", sum);
