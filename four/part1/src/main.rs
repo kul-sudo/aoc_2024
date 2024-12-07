@@ -165,7 +165,7 @@ fn check_direction(mut i: usize, mut j: usize, direction: (isize, isize)) -> boo
         i = i_new as usize;
         j = j_new as usize;
 
-        if index(j, i) != PHRASE.chars().nth(p).unwrap() {
+        if PHRASE.chars().nth(p) != Some(index(j, i)) {
             return false;
         }
     }
